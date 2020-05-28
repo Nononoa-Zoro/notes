@@ -1,0 +1,39 @@
+
+###############数据库连接
+
+db, err := gorm.Open("mysql", "root:123456@/gormdb?charset=utf8&parseTime=True&loc=Local")
+
+###############插入数据
+
+	db.Model(&model.Product{}).Create(&model.Product{
+		Code:  "A123",
+		Price: 900,
+	})
+
+###############删除数据
+	
+	//删除指定Model的id=1的数据记录，如果该表有deleted_at字段的话，会更新这个字段的值但是并不会删除这个记录
+	db.Model(&Product{}).Where("id = ?","1").Delete(Model.Product{})
+	//被软删除的记录不会再被查询出来，因为在查询的时候会忽略掉deleted_at字段不为空的记录
+	
+	//物理删除（直接从数据库删除数据）
+	db.Model(&model.Product{}).Unscoped().Where("id = ?","1").Delete(model.Product{})
+	
+	
+##############更新指定记录的指定字段
+	//更新id=2的price字段为9999
+	err = db.Model(&model.Product{}).Where("id=?", "2").Update("price", 9999).Error
+	if err == nil {
+		fmt.Println("update successfully")
+	}else{
+		fmt.Println(err.Error())
+	}
+###############查询数据
+
+	
+	//根据主键升序查询第一个记录
+	var p model.Product
+	db.Model(&model.Product{}).First(&p)
+	fmt.Println(p)
+	
+	

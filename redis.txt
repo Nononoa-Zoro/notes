@@ -1,0 +1,392 @@
+
+开启server:进入redis目录 执行redis-server.exe redis.windows.conf
+开启client:redis-cli.exe -h 127.0.0.1 -p 6379
+
+修改redis默认端口 redis安装目录下的redis.windows.conf 找到port
+
+
+
+
+#######################string类型的操作
+
+set key value
+get key 
+del key
+
+mset key1 value1 key2 value2 //一次设置多个key value
+mget key1 key2 				 //一次获取多个key对应的value
+strlen key     				 //返回key的字符长度
+append key value 			 //对于指定的key增加value
+
+string类型的扩展操作
+
+incr key //对指定key的value增加单位1，key必须是数字类型	
+incrby key increment
+decr key
+decrby key increment
+
+注意：redis可以保证数据库主键的唯一性。（incr）
+
+string扩展操作之----设置过期时间
+setex key seconds value //秒 <key,value>过seconds失效
+psetex key milliseconds value //毫秒
+
+数值计算的最大范围是Long.MAX_VALUE
+
+string类型值的命名规范
+user:id:1024:fans  //表明：主键名：主键id：key的标识
+user:id:1024:blogs
+user:id:1024:focus
+
+也可以存储Json数据格式
+set user:id:1024 {id:0024,blogs:789,fans:12345}
+
+
+
+#########################主从复制
+在从redis server上执行slaveof <ip> <port>，使得当前机器成为redis主服务器的一个从服务器并且会复制主服务器的数据到从服务器。
+
+redis2.8以前：
+1.同步：将从服务器的状态更新为主服务器的状态。
+	从服务器向主服务器发送SYNC命令，主服务器执行BGSAVE指令，生成一个RDB文件，并从现在开始记录收到的所有写命令。
+	主服务器在执行完BGSAVE之后发送RDB文件给从服务器，然后将缓冲区的写命令也发送给从服务器。
+2.命令传播：在同步之后主服务器状态修改，将修改命令发送给从服务器。
+缺点：
+	对于从服务器初次复制可以很好完成，但是对于掉线重连的情景不能很好的支持。如果从服务器掉线重连，那么还会发送SYNC指令给主服务器，
+	这是一个非常耗时的操作，同时主服务器执行BGSAVE生成当前时刻的全量数据备份文件，RDB，再传输给从服务器。
+
+redis2.8及以后：
+	PSYNC取代了SYNC 
+	如果从服务器掉线，主服务器只将主从服务器掉线之后收到的写命令发送给从服务器。
+
+PSYNC指令的三个概念：
+	1.offset(复制偏移量)：主服务器中记录的发送的数据量，从服务器记录的是接受的数据量。
+	2.复制积压缓冲区：固定长度的FIFO队列
+		当主服务器进行命令传播的时候，不仅会将指令发送给从服务器还会把指令发送给复制积压缓冲区。
+		当从服务器需要执行PSYNC指令的时候，首先会去判断offset偏移量之后的数据是不是在复制缓冲区中，如果是则执行部分重同步操作
+		否则执行完全重同步
+	3.服务运行ID：每个redis对应一个40个随机的16进制数字
+		当从服务器初次复制主服务器的时候，会保存一个主服务器的ID。
+		如果从服务器掉线重连之后发现是掉线之前的主服务器就执行部分重同步
+		如果不是就执行完全重同步
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#######################Hash类型
+一个key对应的是一个hash结构，就是一个存储空间中有多个key,value。
+一个hash结构是多个filed和对应的value构成的。
+
+添加修改数据
+hset key field value 
+hmset key field1 value1 field2 value2 field3 value3 //添加多个数据
+
+获取数据
+hget key field //获取指定key中指定field的数据
+hmget key field1 field2 field3 //获取多个数据
+hgetall key    //获取指定key的所有数据
+
+删除数据
+hdel key field //删除指定key指定field的数据
+
+获取哈希表中的字段的数量
+hlen key
+
+判断哈希表中是否存在某个字段
+hexists key field 
+
+获取key的所有field
+hkeys key 
+
+获取key所有的values
+hvals key
+
+设置指定字段的数值数据增加指定的范围
+hincrby key field increment
+hincrbyfloat key field increment 
+
+注意：Hash类型下的value只能存放字符串，不能存放其他数据类型的值，不存在嵌套类型，如果数据没找到返回nil。
+
+
+
+
+
+
+
+
+
+
+
+
+
+#######################list类型（底层是一个双向链表）
+基本的数据操作
+
+添加/修改数据
+lpush key value1 value2 ... //左边添加
+rpush key value1 value2 ... //右边添加
+
+获取数据
+lrange key start stop
+lindex key index //获取index位置上的元素
+llen key //获取list中的元素个数
+
+移除元素
+lpop key //从左边移除元素
+rpop key //从右边移除元素
+
+list的扩展操作
+blpop key timeout //在规定的时间内，阻塞等待，如果拿到了数据就返回，没有返回nil。这是一种阻塞式的方式。
+
+删除list中指定的元素
+lrem key count value 
+
+注意：list中保存的都是string类型的数据，list有索引的概念，操作数据的时候都是入队和出队，或者先进后出。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#######################set数据类型（底层还是hash，不过所有的value都是nil而key就是我们需要的值）
+添加数据
+sadd key member1 member2
+
+获取全部数据
+smembers key 
+
+删除数据
+srem key member1 member2
+
+获取集合的数量
+scard key
+
+判断集合中是否包含指定数据
+sismember key member 
+
+随机获取集合中指定数量的数据（原集合的数据仍然存在）
+srandmember key count
+
+随机获得原来集合中的数据并且删除
+spop key 
+
+注意：set可以运用于随机推荐。比如：热门旅游线路的推荐，可以从set中随机选择几个作为推荐的候选项。
+
+set的扩展操作
+
+求两个几个的交集
+sinter key1 [key2]
+
+并集
+sunion key1 key2
+
+差集
+sdiff key1 key2
+
+求两个集合的交集，并集，差集并存储到指定的集合中
+sinterstore destination key1 [key2]
+sunionstore destination key1 [key2]
+sdiffstore  destination key1 [key2]
+
+将指定元素从原始集合移动到目标集合中去
+smove source destination member 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#######################sorted_set（有序集合）（底层用一个score字段来进行排序）
+
+添加数据
+zadd key score1 member1 score2 member2
+
+获取全部数据
+zrange key start stop [withscores]    //升序输出，withscores可以把score一并输出
+zrevrange key start stop [withscores] //降序输出
+
+删除数据
+zrem key member
+
+按条件获取数据
+zrangebyscore key min max [withscores] //输出scores的范围在min和max之间的元素
+zrevrangescore key min max [withscores] //反序输出
+
+条件删除数据
+zremrangebyrank key start stop //按照索引删除元素
+zremrangebyscore key min max //删除[min,max]区间的元素，包含左右区间的元素
+
+获取集合数据总量
+zcard key //返回sorted_set的数据个数
+zcount key min max //指定[min,max]区间有多少个数据
+
+集合的交并操作
+zinterstore destination numkeys key [key...] //把所有几个中相同的元素求和
+zinterunion destination numkeys key [key...]
+
+sorted_set扩展操作
+zrank key member //查看元素的索引
+zrevrank key member //查看元素的反向索引位置
+
+score值的获取和修改
+zscore key member //获取指定member的score值
+zincrby key increment member //指定元素增加score值
+
+注意：sorted_set可以适用于定时任务执行顺序管理或者任务过期管理，（vip到期）。
+
+redis可以用于限时限次的服务控制。比如在规定1min内只能调用10次。
+setex userid:415 60 9223372036854765 //Long的最大值减10 
+incr userid:415 //只需要incr 不需要判断是否超过了10次 这样可以减少判定次数
+
+Key的通用操作
+key是一个字符串，通过key可以获取redis中保存的数据。
+
+针对key的操作：
+1.key自身状态的相关操作，删除，判断存在，获取类型等等。
+2.key的有效性控制，有效期设定，判断是否有效，有效性切换。
+3.对于Key的快速查询操作。
+
+删除指定的key
+del key
+
+判断指定的key是否存在
+exists key
+
+获取指定的key的类型
+type key
+
+Key的扩展操作（时效性控制）
+expire key seconds 
+pexpire key milliseconds 
+expireat key timestamp
+pexpireat key milliseconds-timestamp 
+
+获取key的有效时间（还剩多久）
+ttl key //还剩多久时间 单位秒
+
+ttl：如果key设置了有效时间则返回还剩多少有效时间
+	 如果不存在这个key返回-2
+	 如果永久存在返回-1
+
+pttl key //还剩多久时间 单位毫秒
+
+切换Key从时效性变为永久性
+persist key //设置key永久不失效
+
+Key扩展操作（key快速查询）
+keys pattern //返回匹配pattern的所有key
+* ：匹配任意数量的任意符号
+？：匹配任意一个符号
+[]：匹配一个指定的符号
+
+keys u[st]er:1 查询所有以u开头的，以er:1结尾的中间包含一个字母s或者t的key。
+
+key的其他操作
+为key改名
+rename key newkey
+
+数据库的通用操作
+redis为每个服务提供16个数据库（0-15）
+
+切换数据库
+select index
+
+数据移动
+move key db
+
+数据清除操作
+flushdb  //删除当前db的数据
+flushall //删除所有数据库中的数据
+dbsize   //当前数据库存了多少个key
+
+
+Redis的持久化方案
+RDB：数据当前的快照保存下来。
+AOF：保存数据操作。
+
+RDB
+命令：SAVE 保存当前数据快照
+
+SAVE命令的配置
+save seconds changes //在限定时间内发生了changes次数的话，则执行save指令。
+
+RDB的优点
+1.RDB是一个紧凑的压缩二进制文件，存储效率高。
+2.RDB内部存储的是redis在某个时间点的数据快照，适用于数据备份和全量复制场景。
+3.RDB回复数据的速度比AOF快很多
+
+RDB的缺点
+1.RDB无论是执行指令还是利用配置，无法做到实时持久化，有较大的可能性丢失数据。
+2.bgsave每次运行都会创建子进程执行指令，消耗资源。
+
+AOF（append only file）
+增量方式，记录写指令。
+
+AOF写数据的过程
+写命令到达的时候，首先记录到AOF写命令刷新缓冲区，根据AOF配置，在指定时间刷新缓冲区生成AOF文件到磁盘。
+
+AOF写数据的三种策略
+always （每次）//每次写操作同步到AOF文件中，数据零误差，性能较低
+everysec （每秒）//每秒将缓冲区钟的指令同步到AOF文件中，数据准确性高，性能高，在系统突然宕机的情况下丢失1秒的数据。
+no （系统控制）//由操作系统控制
+
+AOF功能开启
+1.配置文件中添加 appendonly yes|no
+2.配置 appendfsync always|everysec|no
+
+appendfilename filename //在配置文件中可以指定aof文件的名字
+dir //指定aof文件存放的目录
+
+
+#################################redis数据库操作
+config get databases 
+

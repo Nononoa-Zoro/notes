@@ -1,0 +1,42 @@
+GET请求
+
+func httpGet(){
+	url:="https://www.baidu.com"
+	resp, err := http.Get(url)
+	if err != nil {
+		//handle error
+		fmt.Println(err.Error())
+	}
+
+	//记得关闭body
+	defer resp.Body.Close()
+	//从Body中读取 返回[]byte
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		//handle error
+	}
+
+	fmt.Println(string(body))
+
+}
+
+POST请求
+
+func httpPost() {
+	body := "{\"action\":20}"
+	res, err := http.Post("http://xxx.com", "application/json;charset=utf-8", bytes.NewBuffer([]byte(body)))
+	if err != nil {
+		fmt.Println("Fatal error ", err.Error())
+	}
+
+	//res的body记得关闭
+	defer res.Body.Close()
+
+	//从body中读取数据 返回[]byte
+	content, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		fmt.Println("Fatal error ", err.Error())
+	}
+
+	fmt.Println(string(content))
+}

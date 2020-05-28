@@ -1,0 +1,359 @@
+
+
+###实体的第一个字母大小写决定其可见性是否跨包，如果名字是大写开头的，它是导出的。
+
+###声明关键字
+var const type func 
+
+###变量的声明
+var name type = expression
+type 和 expression 可以省略其中的一个
+省略type,变量的类型会根据expression自动推断
+省略expression，默认分配0值
+
+###变量列表
+var a , b ,c = 1,true,nil
+
+包级别的初始化是在main函数之前进行的
+
+###短变量声明
+name := expression
+短变量声明不需要声明所有在左边的变量
+in,err:=os.Open(infile) //1
+out,err:=os.Create(outfile) //2
+上面第一个err是声明，第二个是赋值
+
+短变量的声明至少有一个新变量，上面语句2out和语句1 in 不一样，所以编译可以通过
+
+###指针
+不是所有的值都有地址，但是所有的变量都有对应的地址。指针就是变量的地址。
+使用指针可以在无需知道变量名字的情况下获取或者更新变量的值。
+
+###new函数
+new(T) 返回一个创建一个T类型的值，并且返回这个变量的指针。
+使用new创建变量和取变量地址没有区别，只是一个语法糖。
+func newInt() *int {
+	return new(int)
+}
+
+func newInt() *int {
+	var tmp int
+	return &tmp
+}
+上面两个方法的效果是一样的。
+
+###多重赋值
+查询map  v,ok = m[key]
+类型断言 v,ok = x.(T)
+通道接受 v,ok = <-ch
+
+###类型声明
+type name underlying-type
+
+type Celsius float64（Celsius就是float64类型的）
+如果类型大写，则在其他包中可见
+
+###Golang的数据类型
+基础类型（数字，字符串，布尔）
+聚合类型（结构体，数组）
+引用类型（指针,slice,map,func,channel）
+接口类型（interface）
+
+###整数
+golang具有有符号和无符号整数
+有符号 int8 int16 int32 int64
+无符号 uint8 uint16 uint32 uint64
+
+int和uint都是32位或者64位 但是具体的会根据平台来
+rune是int32的同义词
+
+fmt.Printf 
+%d digital 
+%q 带单引号
+%c 文字符号
+%g 浮点数 %e带指数 %f不带指数
+%q 单引号围绕的字符字面值，由Go语法安全地转义 
+
+浮点数 float32 float64
+
+###字符串
+文本字符串，通常被解释成UTF-8编码的Unicode码点，len函数返回字符串的字节数。
+并非文字符号的个数，s[i]访问第i个字符。
+
+字符串长度 len([]rune(s)) 先把字符串转为rune切片 再求长度
+
+
+###字符串拼接
+s+=t
+
+###字符串无法被修改
+无法通过下标修改字符串的值，正是因为字符串不可改变，所以两个字符串可以安全地共用同一段内存。
+
+Go语言中的原生字符串是反引号`...`括起来的。原生字符串中转义字符不会生效。
+
+strings包
+strings.Field(string s) //把字符串s以空格分隔开 组成一个切片
+
+###字符串和数字的相互转换
+
+strconv包
+
+1.整数转换为字符串
+fmt.Sprintf("%d",x)  or  strconv.Itoa(x)
+
+Sprintf格式化并返回一个字符串而不带任何输出
+Sprintf的占位符：%d 十进制 %b 二进制 %o 八进制 %x 16进制
+
+2.字符串转整数
+x,err:=strconv.Atoi(string s)
+x,err:=strconv.ParseInt("123",10,64) //10进制 最大64位 
+
+
+###Slice
+是一个指向底层数组的指针
+
+slice的初始化
+s:=[]int{1,2,3,4,5} //没有说明长度
+slice无法做比较 只有自己实现函数比较两个切片
+
+func equals(x,y []string) bool{
+	if len(x)!=len(y) {
+		return false
+	}
+
+	for i:=range x{
+		if x[i]!=y[i] {
+			return false
+		}
+	}
+
+	return true
+}
+
+slice的零值是nil，nil表示slice没有对应的底层数组
+判断slice是否为空，应该使用len(s)!=0，因为即使slice不为nil，len(s)也可能为空
+
+make函数创建slice
+make([]T,len,cap) //创建指定类型，len，cap的slice。make其实是创建了一个无名数组，并返回了它的slice。
+这个数组可以仅通过这个slice来进行访问。
+
+###append函数
+用来将元素追加到slice的后面
+var r []rune
+r=append(r,'H')
+
+copy函数
+copy( destSlice, srcSlice []T) int
+从src赋值到des 返回实际赋值的元素个数
+
+###map 类型是map[K]V
+map中所有的键都具有相同的数据类型
+map中所有的值都具有相同的数据类型
+map中的key必须是可以比较的类型
+
+make可以创建一个map
+ages:=make(map[string]int)
+
+map字面量初始化一个map
+ages:=map[string]int{
+	"Alice":31,
+	"charlie":34,
+}
+
+delete //从map中删除一个元素
+delete(ages,"Alice") //从ages中删除key为Alice的数据，如果Alice不是ages中的key则返回0
+
+map的元素不是一个变量，所以没法获取地址
+x:=&ages["Alice"] //这是错误的，一个可能的原因是map会动态扩容，导致原来的元素的存储地址变更。
+
+######Map的遍历
+for name,age:=range ages{
+
+}
+注意map的存储顺序是随机的，如果需要按照某种顺序来遍历，那么我们需要对key排序。
+
+###判断map中的key是否存在
+
+if age,ok := ages["Bob"];!ok {
+	//如果不存在
+}
+
+和slice一样map也是不可比较的，
+
+所有可比较的类型都可以作为map的key
+
+
+###匿名结构体
+在一个结构体中嵌套另外一个结构体只需要声明类型不需要说明变量名字
+type Point struct {
+	X,Y int
+}
+
+type Circle struct {
+	Point
+	Radius int
+}
+
+type Wheel struct {
+	Circle
+	Spokes int
+}
+
+
+func main() {
+
+   	var w Wheel
+   	w.X=1
+   	w.Y=2
+   	w.Radius=3
+   	w.Spokes=4
+
+   	fmt.Println(w)
+}
+
+
+#####嵌套结构体的字面量初始化
+w1:=Wheel{
+	Circle: Circle{Point{
+		X: 0,
+		Y: 0,
+	},2},
+	Spokes: 0,
+}
+
+###########结构体转为JSON
+data,err:=json.marshal(movies)
+date,err:=json.marshalindent(movies,"","    ") //参数1：每行开始的字符 参数2：缩进字符串
+
+###########成员标签
+type Movie struct {
+	Title  string
+	Year   int  `json:"released"`
+	Color  bool `json:"color,omitempty"`
+	Actors []string
+}
+成员标签就是在编译时期关联的一些元信息，通过反射拿到这些信息可以在输出JSON的时候作为字段名
+标签值的第一个部分就是对应JSON的字段名，第二个可选的字段omitempty 表示如果该字段的值是零值或者是空值则不输出到JSON中。
+
+###########JSON转结构体
+作为接受JSON数据的titles只有Title字段所以会舍弃其他字段
+var titles = []struct{Title string}
+err:=json.unmarshal(data,&titles)
+
+
+###########函数
+func methodname(x,y int)(res int){
+}
+
+有些函数可能没有函数体，因为这些函数的实现都是由其他语言实现的
+
+###########函数可以定义多个返回值
+
+###########error是一个接口
+
+###########错误如何处理
+1.将错误传递下去
+2.试错多次后如果出错放弃执行
+
+###########Go语言中的函数可以当作一个变量
+1.可以赋值给变量或者从函数中返回
+2.函数的零值是nil，如果调用一个nil的函数则会导致程序宕机
+
+函数本身不可以相互比较，所以不能出现在map的键中
+
+###########defer 延迟执行
+defer语句在return 之后执行，并且可以更新返回的变量。
+defer可以改变外层函数返回给调用者的结果
+defer函数不到函数结束的最后一刻是不会执行的
+
+###########panic
+抛出异常可以在defer语句中使用recover捕获异常，得到panic的err。但是panic之后语句永远得不到执行。
+
+###########方法
+
+方法的声明:与函数声明类似，在方法名前面加上方法的接收者，表示这个方法属于哪一个类型。
+
+func (p Point) Distance (q Point) float64 {
+	return math.Hypot(q.X-p.X,q.Y-p.Y)
+}
+
+对于一个结构体不能含有同名的方法和字段
+如果需要更新变量，方法中应该传递结构体的指针
+不允许本身是指针类型进行方法声明
+
+###########interface
+
+
+var d data = 15
+var x interface{} = d
+
+//如果x可以转化为fmt.Stringer接口
+if n, ok := x.(fmt.Stringer); ok {
+	fmt.Println(n)
+}
+
+//x转化为原始类型
+if d2, ok := x.(data); ok {
+	fmt.Println(d2)
+}
+
+
+################通道 channel
+
+channel的操作
+
+1.向channel发送数据 ch<-x
+2.从channel获取数据 x:=<-ch  <-ch 接受数据 丢弃结果
+3.close(ch)
+
+创建channel
+
+ch = make(chan int) //无缓冲通道
+ch = make(chan int,0) //容量大小为0 表示无缓冲
+ch = make(chan int,3) //容量大小为3的缓冲通道
+
+无缓冲通道的channel
+大小为0，发送routine发送一个消息，接收方必须接受一个，否则会阻塞发送方。大小为1的生产者消费者模型。
+
+向一个已经关闭的通道上发送数据将会导致程序宕机。
+
+当主goroutine返回时，所有的goroutine都暴力地终结。
+
+
+#############无缓冲通道
+无缓冲通道也叫同步通道，放一个取一个。
+
+go get     //从远程下载源码，执行go install 
+go install //生成可执行文件放到bin目录中，前提是这个go文件是一个可执行文件。如果不是，会编译生成一个.a结尾的文件放到pkg目录下。
+
+
+#######sync.waitgroup 
+WaitGroup 对象内部有一个计数器，最初从0开始，它有三个方法：Add(), Done(), Wait() 用来控制计数器的数量。
+Add(n) 把计数器设置为 n 
+Done() 每次把计数器 -1 
+wait() 会阻塞代码的运行，直到计数器地值减为0。
+
+例子：主线程阻塞 等待100个协程完成操作
+
+	wg := sync.WaitGroup{
+
+	}
+
+	//计数器设置为100
+	wg.Add(100)
+
+	for i := 0; i < 100; i++ {
+		go func(i int) {
+			fmt.Println(i)
+			wg.Done()
+		}(i)
+	}
+
+	//阻塞等待计数器减为0
+	wg.Wait()
+
+
+########注意计数器不能为负数
+########WaitGroup不是一个引用类型，函数传递的时候需要传递指针
+
+

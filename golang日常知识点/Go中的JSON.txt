@@ -1,0 +1,53 @@
+序列化
+
+把 Go struct 序列化成 JSON 对象，Go 提供了 Marshal 方法，正如其含义所示表示编排序列化，函数签名如下：
+
+func Marshal(v interface{}) ([]byte, error)
+
+比如下面的 Go struct：
+type Message struct {
+    Name string
+    Body string
+    Time int64
+}
+使用 Marshal 序列化'
+m := Message{"Alice", "Hello", 1294706395881547000}
+b, err := json.Marshal(m) //将struct序列化成[]byte 
+fmt.Println(string(b)) //{"Name":"Alice","Body":"Hello","Time":1294706395881547000}
+
+注意：
+
+在 Go 中并不是所有的类型都能进行序列化：
+JSON object key 只支持 string
+Channel、complex、function 等 type 无法进行序列化
+数据中如果存在循环引用，则不能进行序列化，因为序列化时会进行递归
+Pointer 序列化之后是其指向的值或者是 nil
+
+还需要注意的是：只有 struct 中支持导出的 field 才能被 JSON package 序列化，即首字母大写的 field。
+
+反序列化
+函数签名如下：
+func Unmarshal(data []byte, v interface{}) error
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

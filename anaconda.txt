@@ -1,0 +1,8 @@
+创建一个名称为python34的虚拟环境并指定python版本为3.4(这里conda会自动找3.4中最新的版本下载)
+conda create -n python34  python=3.4
+conda create -n (环境名字) python=(python的版本号)
+
+查看所有conda的环境
+conda env list 
+
+

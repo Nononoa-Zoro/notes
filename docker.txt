@@ -1,0 +1,96 @@
+dockerfile
+和项目文件处在同一个目录下，用于将项目打包成镜像。
+
+示例dockerfile 
+FROM node:7 //基础镜像 可以选择你的镜像需要的OS和支持的库
+ADD app.js	/app.js //复制项目下的app.js到镜像的/app.js
+ENTRYPOINT ["node","app.js"] //运行镜像时需要执行的命令
+
+###############构建容器镜像
+docker build -t kubia . //在当前目录下找到dockerfile并且构建一个叫做kubia的镜像
+
+
+###############在容器中运行镜像
+docker run --name kubia-container -p 8080:8080 -d kubia //基于kubia镜像构建一个叫做kubia-container的容器，-d（容器与命令行分开） 本机的8080映射到容器的8080
+
+###############列出所有运行的容器
+docker ps 
+
+###############在已有的容器内部运行shell
+docker exec -it kubia-container<容器名字> bash
+
+###############查看容器中运行的进程
+ps aux
+
+###############停止一个容器
+docker stop kubia-container<容器名字>
+
+###############删除容器
+docker rm kubia-container 
+
+###############向镜像仓库上传自己构建的镜像
+docker tag kubia luksa/kubia //kubia镜像别名luksa/kubia 
+docker login //登录docker hub 
+docker push luksa/kubia //上传自己构建的镜像
+
+
+###############安装kubectl与集群的主节点进行REST交互
+kubectl get nodes 
+查看各种kubernertes对象
+
+可以使用gcloud compute ssh <node-name>登录到其中一个节点
+
+kubectl describe node <node-name> //查看一个节点的状态，cpu，内存
+
+###############在kubernetes部署应用
+kubectl run kubia --image=luksa/kubia<指定需要的镜像>  --port=8080<kubernetes监听端口> --generator=run/v1 
+
+###############pod
+
+什么是pod?
+
+	一个Pod（就像一群鲸鱼，或者一个豌豆夹）相当于一个共享context的配置组，
+	在同一个context下，应用可能还会有独立的cgroup隔离机制，一个Pod是一个容器环境下的“逻辑主机”，
+	它可能包含一个或者多个紧密相连的应用，这些应用可能是在同一个物理主机或虚拟机上。
+	Pod 的context可以理解成多个linux命名空间的联合
+
+	PID 命名空间（同一个Pod中应用可以看到其它进程）
+	网络 命名空间（同一个Pod的中的应用对相同的IP地址和端口有权限）
+	IPC 命名空间（同一个Pod中的应用可以通过VPC或者POSIX进行通信）
+	UTS 命名空间（同一个Pod中的应用共享一个主机名称）
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##################列出本地存储的镜像
+docker images 

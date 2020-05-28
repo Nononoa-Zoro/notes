@@ -1,0 +1,70 @@
+
+
+从远程分支pull代码
+1.新建一个目录执行命令 git init 初始化为git的工作目录
+2.执行命令 git remote add origin git@github.com:XXXX/nothing2.git(远程仓库链接)
+3.将远程分支pull到本地 git fetch origin dev (dev是远程仓库的分支名)
+
+
+
+在本地创建分支dev并切换到该分支
+git checkout -b dev(本地分支名称) origin/dev(远程分支名称)
+
+
+
+
+从远程分支pull代码到本地
+git pull origin dev
+
+
+查看当前所在分支
+git branch 
+
+
+删除本地分支
+git branch -d dev(本地分支名称)
+
+
+git pull 和 git fetch
+
+git pull 的过程可以理解为：
+git fetch origin master //从远程主机的master分支拉取最新内容 
+git merge FETCH_HEAD    //将拉取下来的最新内容合并到当前所在的分支中
+
+git fetch是将远程主机的最新内容拉到本地，用户在检查了以后决定是否合并到工作本机分支中。(需要手动执行git merge操作)
+
+
+git推送本地分支到远程分支
+首先需要pull远程分支代码 git pull origin dev（远程分支名称）
+git add .(提交变更到工作区)
+git commit -m "description" (添加变更的描述信息)
+git push origin (本地分支名称):(远程分支名称)
+
+##############查看本地tag
+git tag
+
+##############查看远程的所有tag
+git ls-remote --tags
+
+###################
+创建并切换到本地分支dev
+git checkout -b dev
+
+###################
+查看当前的本地分支与远程分支的关联关系
+git branch -vv
+
+###################
+把本地分支与远程origin的分支进行关联处理(通过 --set-upstream-to 命令)
+git --set-upstream-to=origin/dev (将本地分支关联到远程dev分支)
+
+
+
+
+
+
+
+
+
+
+

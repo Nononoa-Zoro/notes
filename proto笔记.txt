@@ -1,0 +1,109 @@
+
+###########grpc vs restful
+
+grpc使用protobuf定义接口，对于接口有更严格的约束。
+protobuf可以把数据压缩为二进制 减少数据的大小
+
+##################grpc的使用步骤
+1.通过protobuf来定义接口和数据类型
+2.编写gRPC server端代码
+3.编写gRPC client端代码
+
+
+
+
+Protocol buffers是一个灵活的、高效的、自动化的用于对结构化数据进行序列化的协议。
+
+流程：
+1.使用协议缓冲，定义你想要序列化的数据结构。
+2.使用protoc编译proto文件生成对应语言的数据访问类，如在go语言中就是XXX.pb.go。这个文件可以提供访问数据字段的方法。
+
+
+
+protoc编译参数
+
+-Ipath或者--proto_path指定哪一个目录有我们的import的proto文件
+
+
+前提
+protoc 编译proto文件  
+protoc-gen-go插件 编译成go文件的插件 go get github.com/golang/protobuf/protoc-gen-go
+
+
+编译命令：
+protoc -I=. --go_out=../service ./Prod.proto
+
+-I=源文件夹 --go_out=目标文件夹 源proto文件
+
+protoc --go_out=../service Prod.proto
+
+protoc -I=$SRC_DIR --go_out=$DST_DIR $SRC_DIR/addressbook.proto
+
+
+每个字段都有一个unique tag 
+1-15使用单字节编码，常用的字段可以用1-15来表示
+
+如果一个字段没有显示赋值，那么会有一些默认值
+string 空字符串
+bool false
+
+
+option go_package = ".;service"; //指定生成的go代码在木标目录下的哪个包中
+
+optional 可选字段（proto2的语法）
+required 必选字段
+repeated 可重复字段
+
+每个message type都有一个数字来标识
+field的类型有 optional required repeated 
+
+定义好了proto文件之后就可以使用protoc编译这个文件，得到一个特定语言的数据访问类。
+他会提供访问field的方法，如set_name() name()
+
+go_package的作用:
+
+full Go import path for the file //指定go文件的完全导入路径
+
+go_package="example.com/foo/bar"
+假如protobuf文件名叫做 foo.proto
+那么编译生成的文件名字在go_out指定的目录下的example.com/foo/bar/foo.pb.go
+
+
+protoc --proto_path=src --go_out=build/gen --go_opt=paths=source_relative src/foo.proto src/bar/baz.proto
+
+protoc --proto_path=. --go_out=../service --go_opt=paths=source_relative Prod.proto
+
+#########repeated field
+
+repeated Bar foo = 1; //产生一个类型为Bar的名字叫做foo的slice
+
+repeated会在Go中产生一个slice
+
+
+关于编译后的go文件
+1.首字母大写的表示可导出的。首字母如果是下划线，生成的go变量会删除下划线并且改为X。（_my_field_name_2---》XMyFieldName_2）
+
+
+#############保留字段
+reserved 1,2,3,4 to 9,10 to max; //表示这些TAG都不再使用，如果使用会编译出错。
+reserved "foo","m";//表示这些字段名不再使用，如果使用会报编译错误。
+
+
+
+############enum枚举
+
+枚举当中定义的第一个值就是这个枚举的默认值
+Enum的TAG必须从0开始，所以0就是数值的默认值
+
+
+枚举可以定义在一个message中，也可以定义在message外以便复用。
+如果一个消息想要使用Person里面的Gender枚举，可以使用Person.Gender。
+
+###########go mod 
+
+go mod init github.com/zoro/protobuf-go
+
+
+
+
+

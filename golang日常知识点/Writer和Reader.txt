@@ -1,0 +1,19 @@
+
+
+Writer签名
+
+type Writer interface {
+	Write(p []byte) (n int, err error)
+}
+向底层数据流写入len(p)长度的数据，返回n表示读取的字节数，err表示读取过程中产生的错误
+
+
+Reader签名
+
+type Reader interface {
+	Read(p []byte) (n int, err error)
+}
+从底层数据流中(p []byte)读取数据,返回读取的字节数，err表示读取过程发生的错误
+
+
+

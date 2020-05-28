@@ -1,0 +1,165 @@
+
+grpc是什么
+在Grpc框架中，client可以直接调用不同服务器上的方法，而这个调用过程就好像是在调用一个本地的方法。
+
+服务端需要做什么？
+实现接口，启动一个gRpc server来处理客户端请求。
+
+客户端
+客户端有一个stub提供了与gRpc Server相同的方法。
+
+
+
+流程
+
+1.编写pb代码，调用protoc编译proto文件生成的代码我们称作stub。
+
+服务的调用过程为:
+
+1.client调用client stub，这是一次本地过程调用。
+2.对请求消息使用PB做序列化，称为打包。
+3.grpc client将消息发送给grpc server。
+4.grpc server的的系统将收到的 client 的请求消息。
+5.server 将消息反序列化，通过路由找到相应的接口。
+6.调用接口的实现得到结果，最后将结果返回给 client。
+
+grpc编译命令
+protoc --proto_path=proto文件所在目录 --go_out=plugins=grpc:. route_guide.proto（需要编译的proto文件，如果是所有的文件则可以表示为*proto）
+
+
+proto文件中
+
+service XXX {
+	rpc method(request) returns (response);
+}
+
+在protoc编译之后生成一个 interface 
+
+type XXX interface {
+	method(request)(response)
+}
+
+//注意context要使用golang.org/x/net/context
+
+
+
+############################################
+
+proto文件中定义rpc服务
+
+service EmployeeService {
+    //unary 一个请求一个响应
+    rpc GetEmployeeByNo (GetByRequest) returns (EmployeeResponse);
+    //server stream
+    rpc GetAll (GetAllRequest) returns (stream EmployeeResponse);
+    //上传头像 client stream
+    rpc AddAvatar (stream AddPhotoRequest) returns (AddPhotoResponse);
+
+    rpc Save (EmployeeRequest) returns (EmployeeResponse);
+    //双向stream
+    rpc SaveAll (stream EmployeeRequest) returns (stream EmployeeResponse);
+}
+
+编译之后生成的go文件是下面这样的
+// EmployeeServiceServer is the server API for EmployeeService service.
+type EmployeeServiceServer interface {
+	//unary 一个请求一个响应
+	GetEmployeeByNo(context.Context, *GetByRequest) (*EmployeeResponse, error)
+	//server stream
+	GetAll(*GetAllRequest, EmployeeService_GetAllServer) error
+	//上传头像 client stream
+	AddAvatar(EmployeeService_AddAvatarServer) error
+	Save(context.Context, *EmployeeRequest) (*EmployeeResponse, error)
+	//双向stream
+	SaveAll(EmployeeService_SaveAllServer) error
+}
+
+
+############################################
+
+
+
+#################grpcurl 的简单使用
+
+grpcurl的作用是为了感知grpc服务器的服务 所以需要我们为grpc服务器注册反射服务 reflection.Register(gRpcServer)
+
+查询grpc服务器提供的service 名称：grpcurl --plaintext localhost:5001 list
+
+查询grpc服务提供的方法：grpcurl --plaintext localhost:5001 list pb.EmployeeService //注意这个list后边儿的名称是proto所在的包名.service的名称
+
+查询更详细的描述信息  ：grpcurl --plaintext localhost:5001 describe pb.EmployeeService
+
+查询参数的详细信息    ：grpcurl --plaintext localhost:5001 describe pb.EmployeeRequest //注意这个describe后边儿跟的是proto所在的包名.message名
+
+调用grpc服务器上的指定方法：grpcurl -d "{\}"
+
+
+
+
+openssl req -new -x509 -days 3650 \
+    -subj "/C=GB/L=China/O=grpc-server/CN=server.grpc.io" \
+    -key server.key -out server.crt
+	
+	
+##########################################
+
+keepalive.ClientParameters {
+	Time time.Duration //在经过Time之后如果server没有响应，client就去ping server
+	Timeout time.Duration //在client ping了server之后，经历timeout之后如果server没有响应的话，conn close 
+	
+
+}
+
+###########################################
+grpc context  
+1.deadline //多久context过期
+2.Done()   //是一个Channel，当工作结束的时候channel关闭
+3.Value    //通过context中的key可以找到对应key的value
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
