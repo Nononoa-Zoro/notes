@@ -1,0 +1,2 @@
+sed (stream editor)
+利用脚本来处理文件的命令

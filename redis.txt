@@ -72,7 +72,12 @@ PSYNC指令的三个概念：
 
 
 		
+##########################sentinel哨兵
+哨兵机制是redis高可用的基础组件
 
+sentinel本质上是一个redis服务器，但是不需要数据库所以在启动的时候不需要RDB和AOF文件的载入。
+初始化sentinel需要将redis命令替换为sentinel专用的命令。
+sentinel状态中的masters记录了所有被sentinel监视的主服务器的相关信息，字典的键就是主服务器的名称，字典的值是一个sentinelRedisInstance结构
 
 
 
