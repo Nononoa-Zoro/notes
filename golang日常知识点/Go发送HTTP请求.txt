@@ -40,3 +40,16 @@ func httpPost() {
 
 	fmt.Println(string(content))
 }
+
+如果需要考虑header字段 使用http.NewRequest 和 http.Client
+使用NewRequest发请求
+//POST Body
+b,_=json.Marshal(param)
+req,err=http.NewRequest("POST",url,bytes.NewBuffer(b))
+//Header
+req.Header.Add("Authorization","xxxxxx")
+client:=http.Client{}
+response,err:=client.Do(req)
+content,err:=ioutil.ReadAll(response.Body)
+var receiver Receiver
+err:=json.Unmarshal(content,&receiver)

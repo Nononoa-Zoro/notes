@@ -117,6 +117,17 @@ grpc context
 3.Value    //通过context中的key可以找到对应key的value
 
 
+###########################################
+创建一个grpc server的步骤
+1.定义rpc方法（编写proto文件）
+2.实现xxxxxxServiceServer（接口）
+3.注册服务到grpc server中
+func RegisterAppManagerServiceServer(s *grpc.Server, srv AppManagerServiceServer) {
+	s.RegisterService(&_AppManagerService_serviceDesc, srv)
+}
+
+一旦grpc channel建立起来，我们需要一个客户端stub去执行RPC。通过.proto生成的pb包提供的方法，NewXXXXClient方法来创建一个gRPC Client
+ 
 
 
 
