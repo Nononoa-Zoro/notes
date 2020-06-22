@@ -56,7 +56,7 @@ git branch -vv
 
 ###################
 把本地分支与远程origin的分支进行关联处理(通过 --set-upstream-to 命令)
-git --set-upstream-to=origin/dev (将本地分支关联到远程dev分支)
+git branch --set-upstream-to=origin/dev (将本地分支关联到远程dev分支)
 
 
 
