@@ -57,7 +57,7 @@ type service struct {
 
 ##### 2.Service注册
 
-server的注册调用的是通过proto文件生成的pb.go文件中的Register方法，第一个参数是第一步创建的gRpcServer，第二个参数是实现所有定义接口的struct示例
+server的注册调用的是通过proto文件生成的pb.go文件中的Register方法，第一个参数是第一步创建的gRpcServer，第二个参数是实现所有定义接口的struct实例
 
 ```go
 //例子，向gRpc Server中注册一个实现了所有定义接口的service实体
