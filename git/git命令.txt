@@ -50,6 +50,13 @@ git reset --hard HEAD^
 恢复到上上个版本
 git reset --hard HEAD^^
 
+查看所有的命令记录
+git reflog
+
+撤销修改
+git checkout <filename> //把filename在工作区的修改全部撤销掉 回到最近一次的commit或者是add的记录
+
+
 git pull 和 git fetch
 
 git pull 的过程可以理解为：
@@ -83,9 +90,6 @@ git branch -vv
 把本地分支与远程origin的分支进行关联处理(通过 --set-upstream-to 命令)
 git branch --set-upstream-to=origin/dev (将本地分支关联到远程dev分支)
 
-##################回滚代码
-git log 查看commit日志信息
-git checkout <commit-id> 回滚到指定的之前版本
 
 
 
