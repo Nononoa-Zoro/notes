@@ -50,6 +50,9 @@ git reset --hard HEAD^
 恢复到上上个版本
 git reset --hard HEAD^^
 
+git reset --hard <commit-id> //回退到之前的某一个commit-id的版本
+git reset --soft <commit-id> //回退到之前的某一个commit-id的版本，但是代码不会回滚，只有commit-id变为之前的版本
+
 查看所有的命令记录
 git reflog
 
