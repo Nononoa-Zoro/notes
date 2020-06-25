@@ -265,6 +265,7 @@ func (s *Server) handleStream(t transport.ServerTransport, stream *transport.Str
 	srv, knownService := s.m[service]
 	if knownService {
 		if md, ok := srv.md[method]; ok {
+            //sh.HandleRPC(stream.Context(), statsBegin) 调用handler处理rpc请求
 			s.processUnaryRPC(t, stream, srv, md, trInfo)
 			return
 		}
