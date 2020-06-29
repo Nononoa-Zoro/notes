@@ -80,6 +80,25 @@ sentinel本质上是一个redis服务器，但是不需要数据库所以在启�
 sentinel状态中的masters记录了所有被sentinel监视的主服务器的相关信息，字典的键就是主服务器的名称，字典的值是一个sentinelRedisInstance结构
 
 
+sentinel内部有三个定时任务
+1.每10s每个sentinel会对master和slave发送info命令
+	发现slave节点
+	确认主从关系
+2.每2s每个sentinel通过master节点的channel交换信息。
+3.每1s每个sentinel对其他sentinel和redis节点执行ping操作。
+
+master节点主观下线(Subjectively Down)
+主观下线是指单个sentinel认为某个服务下线，
+主观下线就是说如果服务器在down-after-milliseconds给定的毫秒数之内， 没有返回 Sentinel 发送的 PING 命令的回复，
+ 或者返回一个错误， 那么 Sentinel 将这个服务器标记为主观下线（SDOWN ）。
+
+
+客观下线
+客观下线（Objectively Down， 简称 ODOWN）指的是多个 Sentinel 实例在对同一个服务器做出 SDOWN 判断， 
+并且通过 SENTINEL is-master-down-by-addr 命令互相交流之后， 得出的服务器下线判断，然后开启failover。
+客观下线就是说只有在足够数量的 Sentinel 都将一个服务器标记为主观下线之后， 服务器才会被标记为客观下线（ODOWN）。
+
+
 
 
 
@@ -392,6 +411,28 @@ appendfilename filename //在配置文件中可以指定aof文件的名字
 dir //指定aof文件存放的目录
 
 
-#################################redis数据库操作
-config get databases 
+查看key的命中次数和未命中次数
+info stats
+
+keyspace_hits:22 //key命中次数为22次
+keyspace_misses:1 //key未命中次数为1次
+
+移除key的过期时间
+persist <key-name>
+
+
+过期键的删除策略
+1. 定时删除，在设置键的过期时间的时候，创建一个定时器，定时器会在键的过期时间到来的时候删除键。（主动删除策略）
+   对内存友好，对CPU不友好
+   
+2. 惰性删除，放任过期的键不管，当get的时候判断这个键是否过期，如果没有过期就返回，过期了就删除。（被动删除）
+   对CPU友好，对内存不友好
+
+3. 定期删除，每隔一段时间，程序就对数据库进行一次检查，删除其中过期的数据。（主动删除）
+
+
+
+
+
+
 
