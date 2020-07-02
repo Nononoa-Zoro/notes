@@ -430,6 +430,10 @@ persist <key-name>
 
 3. 定期删除，每隔一段时间，程序就对数据库进行一次检查，删除其中过期的数据。（主动删除）
 
+dirty计数器和lastSave
+dirty计数器是距离上次成功执行SAVE或者是BGSAVE命令之后，服务器对数据库进行了多少次修改
+lastsave是一个UNIX时间戳，记录了上一次SAVE或者BGSAVE执行成功的时间戳
+
 
 
 
