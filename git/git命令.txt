@@ -74,6 +74,7 @@ git merge FETCH_HEAD    //将拉取下来的最新内容合并到当前所在的
 
 git fetch是将远程主机的最新内容拉到本地，用户在检查了以后决定是否合并到工作本机分支中。(需要手动执行git merge操作)
 
+git fetch origin <远程分支名称>:<本地分支名称> //从远程分支拉去并在本地创建一个分支与之关联
 
 git推送本地分支到远程分支
 首先需要pull远程分支代码 git pull origin dev（远程分支名称）
