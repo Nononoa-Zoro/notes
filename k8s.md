@@ -1,10 +1,22 @@
 minikube start
 
+
+
 kubectl get nodes //创建一个单节点的集群
+
+
 
 kubectl cluster-info  //查看集群信息
 
-kubectl run kubernetes-bootcamp --image=docker.io/jocatalin/kubernetes-bootcamp:v1 --port=8080  //部署应用
+
+
+kubectl run kubernetes-bootcamp --image=docker.io/jocatalin/kubernetes-bootcamp:v1 --port=8080  
+
+//部署应用 创建一个应用（应用名称为kubernetes-bootcamp，使用的镜像是docker.io/jocatalin/kubernetes-bootcamp:v1，应用运行的端口是8080）
+
+
+
+通过service暴露容器的端口，这样会随机将一个外部端口绑定到pod内部
 
 kubectl expose deployment/kubernetes-bootcamp --type="NodePort" --port 8080 //暴露pod的内部端口
 
@@ -23,6 +35,8 @@ NAME                  TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        
 kubernetes            ClusterIP   10.96.0.1        <none>        443/TCP          3m41s
 kubernetes-bootcamp   NodePort    10.108.169.135   <none>        8080:30519/TCP   68s
 ```
+
+pod内部端口8080被映射到外部的30519端口，外部可以通过30519端口访问Pod。
 
 
 
@@ -100,6 +114,22 @@ Service有自己的IP和端口，Service为Pod提供负载均衡。
 多个用户或者多个项目组使用一个k8s Cluster，使用NameSpace来将Controller和Pod
 
 
+
+#### Deployment
+
+**运行deployment**
+
+kubectl run nginx-deployment --image=nginx:1.7.9 --replicas=2 
+
+创建包含两个副本的Deployment名称为nginx-deployment，容器镜像为nginx:1.7.9
+
+**查看deplyment的状态**
+
+kubectl get deployment
+
+**删除deployment**
+
+kubectl delete deployment <deployment_name>
 
 
 
