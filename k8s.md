@@ -112,3 +112,34 @@ Service有自己的IP和端口，Service为Pod提供负载均衡。
 **kubeadm**用于初始化Cluster
 
 **kubectl**是k8s的命令行工具。通过kubectl可以部署管理应用，查看各种资源，创建，删除和更新各种组件。
+
+
+
+#### Controller
+
+k8s使用多种类型的controller管理Pod的生命周期。为了满足不同的业务场景，k8s开发了Deployment,ReplicaSet,DaemonSet,StatefulSet,Job等多种Controller。
+
+kubectl run nginx-deployment --image=nginx:1.7.9 --replicas=2
+
+创建一个包含两个副本的Deployment，名字叫做nginx-deployment
+
+**kubectl get deployment nginx-deployment**：查看nginx-deployment的状态
+
+**kubectl describe deployment**：查看deployment的详细信息
+
+
+
+
+
+#### Node可以有label
+
+label是为了给Node打标签，有时候可能会存在这样一种需求，将一个pod调度到特定的Node中去。
+
+比如：
+
+kubectl label node k8s-node1 disktype=ssd，label是key-value对。给k8s-node1节点贴上disktype=ssd的标签。
+
+
+
+使用kubectl get node --show-labels查看节点的label。
+
