@@ -35,7 +35,7 @@ public class leecode_20有效的括号 {
     }
 
     public static void main(String[] args) {
-
+        System.out.println(isValid("{}()"));
     }
 
 

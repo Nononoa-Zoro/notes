@@ -180,6 +180,8 @@ rpop key //从右边移除元素
 
 list的扩展操作
 blpop key timeout //在规定的时间内，阻塞等待，如果拿到了数据就返回，没有返回nil。这是一种阻塞式的方式。
+brpop key1 [key2] timeout // 在指定的timeout时间范围内，根据指定的key的先后顺序，弹出第一个非空列表的尾部元素。
+如果timeout设置为0，可以理解为无限超时，阻塞等待。
 
 删除list中指定的元素
 lrem key count value 

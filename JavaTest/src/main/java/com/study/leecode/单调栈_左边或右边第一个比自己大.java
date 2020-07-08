@@ -1,8 +1,8 @@
 package com.study.leecode;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Stack;
+
 
 public class 单调栈_左边或右边第一个比自己大 {
 
@@ -35,11 +35,11 @@ public class 单调栈_左边或右边第一个比自己大 {
     //左边第一个比自己大
     public static int[] method2(int[] arr) {
         int[] res = new int[arr.length];
-        Arrays.fill(res,-1);
+        Arrays.fill(res, -1);
         Stack<Integer> stack = new Stack<>();
-        for(int i=arr.length-1;i>=0;i--){
-            while (!stack.isEmpty()&&arr[i]>arr[stack.peek()]){
-                res[stack.pop()]=arr[i];
+        for (int i = arr.length - 1; i >= 0; i--) {
+            while (!stack.isEmpty() && arr[i] > arr[stack.peek()]) {
+                res[stack.pop()] = arr[i];
             }
             stack.push(i);
         }
