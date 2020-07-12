@@ -20,53 +20,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="29eb38d0-d3b3-4e4a-82c8-2597c6371824" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_classic_1_2_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_classic_1_2_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_core_1_2_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_core_1_2_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_jayway_jsonpath_json_path_2_4_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_jayway_jsonpath_json_path_2_4_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_vaadin_external_google_android_json_0_0_20131108_vaadin1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_vaadin_external_google_android_json_0_0_20131108_vaadin1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_annotation_javax_annotation_api_1_3_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_annotation_javax_annotation_api_1_3_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_xml_bind_jaxb_api_2_3_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_xml_bind_jaxb_api_2_3_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_12.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_12.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_bytebuddy_byte_buddy_1_9_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_bytebuddy_byte_buddy_1_9_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_bytebuddy_byte_buddy_agent_1_9_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_bytebuddy_byte_buddy_agent_1_9_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_minidev_accessors_smart_1_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_minidev_accessors_smart_1_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_minidev_json_smart_2_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_minidev_json_smart_2_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_api_2_11_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_api_2_11_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_to_slf4j_2_11_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_to_slf4j_2_11_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_assertj_assertj_core_3_11_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_assertj_assertj_core_3_11_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_library_1_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_library_1_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_mockito_mockito_core_2_23_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mockito_mockito_core_2_23_4.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_objenesis_objenesis_2_6.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_objenesis_objenesis_2_6.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_ow2_asm_asm_5_0_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_ow2_asm_asm_5_0_4.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_skyscreamer_jsonassert_1_5_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_skyscreamer_jsonassert_1_5_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jul_to_slf4j_1_7_28.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jul_to_slf4j_1_7_28.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_25.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_25.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_2_1_8_RELEASE.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_2_1_8_RELEASE.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_autoconfigure_2_1_8_RELEASE.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_autoconfigure_2_1_8_RELEASE.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_2_1_8_RELEASE.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_2_1_8_RELEASE.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_logging_2_1_8_RELEASE.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_logging_2_1_8_RELEASE.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_test_2_1_8_RELEASE.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_test_2_1_8_RELEASE.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_2_1_8_RELEASE.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_2_1_8_RELEASE.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_autoconfigure_2_1_8_RELEASE.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_autoconfigure_2_1_8_RELEASE.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aop_5_1_9_RELEASE.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aop_5_1_9_RELEASE.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_beans_5_1_9_RELEASE.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_beans_5_1_9_RELEASE.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_5_1_9_RELEASE.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_5_1_9_RELEASE.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_core_5_1_9_RELEASE.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_core_5_1_9_RELEASE.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_expression_5_1_9_RELEASE.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_expression_5_1_9_RELEASE.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jcl_5_1_9_RELEASE.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jcl_5_1_9_RELEASE.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_test_5_1_9_RELEASE.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_test_5_1_9_RELEASE.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_xmlunit_xmlunit_core_2_6_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_xmlunit_xmlunit_core_2_6_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_yaml_snakeyaml_1_23.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_yaml_snakeyaml_1_23.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/study/sort/快排算法.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/栈/leecode_84柱状图中最大的矩形.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/栈/leecoede_71简化路径.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/study/leecode/单调栈_左边或右边第一个比自己大.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/study/leecode/单调栈_左边或右边第一个比自己大.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/栈/leecode_20有效的括号.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/栈/leecode_20有效的括号.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/JavaTest.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/study/leecode/leecode_14最长公共前缀.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/study/leecode/leecode_14最长公共前缀.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/study/sort/BubbleSort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/study/sort/BubbleSort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/study/sort/二分查找.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/study/sort/二分查找.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/study/leecode/单调栈_左边或右边第一个比自己大.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/study/leecode/单调栈_左边或右边第一个比自己大.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/study/leecode/单调栈_左边或右边第一个比自己小.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/study/leecode/单调栈_左边或右边第一个比自己小.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../golang日常知识点/go的context.md" beforeDir="false" afterPath="$PROJECT_DIR$/../golang日常知识点/go的context.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/study/sort/BubbleSort.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/study/sort/BubbleSort.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/study/sort/二分查找.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/study/sort/二分查找.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../git/git命令.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../git/git命令.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../redis/redis.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../redis/redis.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -141,13 +106,13 @@
       <recent name="D:\projects\JavaTest\src\main\java\并发编程" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.单调栈_左边或右边第一个比自己小">
-    <configuration name="测试主线程结束子线程还会执行吗" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="并发编程.测试主线程结束子线程还会执行吗" />
+  <component name="RunManager" selected="Application.leecode_84柱状图中最大的矩形">
+    <configuration name="快排算法" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.study.sort.快排算法" />
       <module name="JavaTest" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="并发编程.*" />
+          <option name="PATTERN" value="com.study.sort.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -155,12 +120,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="同时启动10个线程_计数器实现" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="并发编程.同时启动10个线程_计数器实现" />
+    <configuration name="BubbleSort" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.study.sort.BubbleSort" />
       <module name="JavaTest" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="并发编程.*" />
+          <option name="PATTERN" value="com.study.sort.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MergeSort1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.study.sort.MergeSort1" />
+      <module name="JavaTest" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.study.sort.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -181,19 +159,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="单调栈_左边或右边第一个比自己大" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.study.leecode.单调栈_左边或右边第一个比自己大" />
-      <module name="JavaTest" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.study.leecode.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="单调栈_左边或右边第一个比自己小" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.study.leecode.单调栈_左边或右边第一个比自己小" />
       <module name="JavaTest" />
@@ -207,8 +172,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="leecode_20有效的括号" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="栈.leecode_20有效的括号" />
+    <configuration name="leecode_84柱状图中最大的矩形" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="栈.leecode_84柱状图中最大的矩形" />
+      <module name="JavaTest" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="栈.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="leecoede_71简化路径" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="栈.leecoede_71简化路径" />
       <module name="JavaTest" />
       <extension name="coverage">
         <pattern>
@@ -222,11 +200,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.单调栈_左边或右边第一个比自己小" />
-        <item itemvalue="Application.单调栈_左边或右边第一个比自己大" />
-        <item itemvalue="Application.leecode_20有效的括号" />
-        <item itemvalue="Application.测试主线程结束子线程还会执行吗" />
-        <item itemvalue="Application.同时启动10个线程_计数器实现" />
+        <item itemvalue="Application.leecode_84柱状图中最大的矩形" />
+        <item itemvalue="Application.leecoede_71简化路径" />
+        <item itemvalue="Application.BubbleSort" />
+        <item itemvalue="Application.快排算法" />
+        <item itemvalue="Application.MergeSort1" />
       </list>
     </recent_temporary>
   </component>
@@ -468,6 +446,9 @@
       <workItem from="1594044981347" duration="1065000" />
       <workItem from="1594128615853" duration="186000" />
       <workItem from="1594208746748" duration="4411000" />
+      <workItem from="1594268595760" duration="14152000" />
+      <workItem from="1594520978026" duration="84000" />
+      <workItem from="1594521167938" duration="4848000" />
     </task>
     <servers />
   </component>
@@ -484,6 +465,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="574" y="134" key="#com.intellij.ide.util.MemberChooser" timestamp="1587179389911">
@@ -499,26 +481,26 @@
     </state>
     <state x="549" y="173" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1586152510506" />
     <state x="2606" y="218" key="FileChooserDialogImpl/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1594209384943" />
-    <state width="1877" height="285" key="GridCell.Tab.0.bottom" timestamp="1594213162326">
+    <state width="1877" height="406" key="GridCell.Tab.0.bottom" timestamp="1594527611410">
       <screen x="1920" y="0" width="1920" height="1050" />
     </state>
     <state width="1493" height="400" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1588928516721" />
-    <state width="1877" height="285" key="GridCell.Tab.0.bottom/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1594213162326" />
-    <state width="1877" height="285" key="GridCell.Tab.0.center" timestamp="1594213162326">
+    <state width="1877" height="406" key="GridCell.Tab.0.bottom/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1594527611410" />
+    <state width="1877" height="406" key="GridCell.Tab.0.center" timestamp="1594527611410">
       <screen x="1920" y="0" width="1920" height="1050" />
     </state>
     <state width="1493" height="400" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1588928516721" />
-    <state width="1877" height="285" key="GridCell.Tab.0.center/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1594213162326" />
-    <state width="1877" height="285" key="GridCell.Tab.0.left" timestamp="1594213162326">
+    <state width="1877" height="406" key="GridCell.Tab.0.center/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1594527611410" />
+    <state width="1877" height="406" key="GridCell.Tab.0.left" timestamp="1594527611410">
       <screen x="1920" y="0" width="1920" height="1050" />
     </state>
     <state width="1493" height="400" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1588928516721" />
-    <state width="1877" height="285" key="GridCell.Tab.0.left/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1594213162326" />
-    <state width="1877" height="285" key="GridCell.Tab.0.right" timestamp="1594213162326">
+    <state width="1877" height="406" key="GridCell.Tab.0.left/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1594527611410" />
+    <state width="1877" height="406" key="GridCell.Tab.0.right" timestamp="1594527611410">
       <screen x="1920" y="0" width="1920" height="1050" />
     </state>
     <state width="1493" height="400" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1588928516721" />
-    <state width="1877" height="285" key="GridCell.Tab.0.right/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1594213162326" />
+    <state width="1877" height="406" key="GridCell.Tab.0.right/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1594527611410" />
     <state width="1493" height="275" key="GridCell.Tab.1.bottom" timestamp="1587122781164">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -552,10 +534,11 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="178" y="68" key="new project wizard/0.0.1536.834@0.0.1536.834" timestamp="1587887808950" />
-    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup" timestamp="1586662797054">
-      <screen x="0" y="0" width="1536" height="834" />
+    <state x="2459" y="195" width="840" height="854" key="search.everywhere.popup" timestamp="1594524920151">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
     <state x="431" y="155" width="672" height="678" key="search.everywhere.popup/0.0.1536.834@0.0.1536.834" timestamp="1586662797054" />
+    <state x="2459" y="195" width="840" height="854" key="search.everywhere.popup/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1594524920151" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

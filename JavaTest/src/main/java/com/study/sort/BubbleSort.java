@@ -38,6 +38,7 @@ public class BubbleSort {
             //0-i是有序的 所以j>=i
             for (int j = length - 2; j >= i; j--) {
                 if (arr[j] > arr[j + 1]) {
+                    //如果前面的元素大于后面的元素 则交换
                     swap(arr, j, j + 1);
                     flag = true;
                 }
