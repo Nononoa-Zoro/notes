@@ -18,19 +18,43 @@ public class 单调栈_左边或右边第一个比自己大 {
     }
 
 
-    //右边第一个比自己大
-    public static int[] method1(int[] arr) {
+    public static int[] method1(int[] arr){
         int[] res = new int[arr.length];
-        Arrays.fill(res, -1);
+        Arrays.fill(res,-1);
         Stack<Integer> stack = new Stack<>();
-        for (int i = 0; i < arr.length; i++) {
-            while (!stack.isEmpty() && arr[i] > arr[stack.peek()]) {
-                res[stack.pop()] = arr[i];
+        for(int i=0;i<arr.length;i++){
+            while (!stack.isEmpty()&&arr[i]>arr[stack.peek()]){
+                res[stack.pop()]=arr[i];
             }
             stack.push(i);
         }
         return res;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+    //右边第一个比自己大
+//    public static int[] method1(int[] arr) {
+//        int[] res = new int[arr.length];
+//        Arrays.fill(res, -1);
+//        Stack<Integer> stack = new Stack<>();
+//        for (int i = 0; i < arr.length; i++) {
+//            while (!stack.isEmpty() && arr[i] > arr[stack.peek()]) {
+//                res[stack.pop()] = arr[i];
+//            }
+//            stack.push(i);
+//        }
+//        return res;
+//    }
 
     //左边第一个比自己大
     public static int[] method2(int[] arr) {
