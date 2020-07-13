@@ -20,18 +20,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="29eb38d0-d3b3-4e4a-82c8-2597c6371824" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/study/sort/快排算法.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/栈/leecode_84柱状图中最大的矩形.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/栈/leecoede_71简化路径.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/study/leecode/单调栈_左边或右边第一个比自己大.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/study/leecode/单调栈_左边或右边第一个比自己大.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/study/sort/BubbleSort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/study/sort/BubbleSort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/study/sort/二分查找.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/study/sort/二分查找.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/study/leecode/单调栈_左边或右边第一个比自己大.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/study/leecode/单调栈_左边或右边第一个比自己大.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/study/leecode/单调栈_左边或右边第一个比自己小.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/study/leecode/单调栈_左边或右边第一个比自己小.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/study/sort/BubbleSort.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/study/sort/BubbleSort.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/study/sort/二分查找.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/study/sort/二分查找.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../git/git命令.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../git/git命令.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../redis/redis.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../redis/redis.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -449,6 +437,7 @@
       <workItem from="1594268595760" duration="14152000" />
       <workItem from="1594520978026" duration="84000" />
       <workItem from="1594521167938" duration="4848000" />
+      <workItem from="1594604404489" duration="10000" />
     </task>
     <servers />
   </component>
