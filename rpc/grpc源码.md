@@ -1,3 +1,7 @@
+
+
+
+
 #### gRpc Server的创建流程
 
 ##### 1.创建一个gRpcServer
@@ -78,6 +82,7 @@ func RegisterEmployeeServiceServer(s *grpc.Server, srv EmployeeServiceServer) {
 ```
 
 ```go
+//判断传入的service是否实现了定义的所有接口
 func (s *Server) RegisterService(sd *ServiceDesc, ss interface{}) {
 	ht := reflect.TypeOf(sd.HandlerType).Elem()
 	st := reflect.TypeOf(ss)
@@ -96,6 +101,70 @@ type ServiceDesc struct {
 	Streams     []StreamDesc
 	Metadata    interface{}
 }
+//下面是我的例子中的ServiceDesc
+var _EmployeeService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "pb.EmployeeService",//<package_name>.<rpc_service_name>
+	HandlerType: (*EmployeeServiceServer)(nil),//一个指向Server的指针，用来检查用户注册的这个结构体是否实现了定义的Server的所有接口
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetEmployeeByNo",//方法名称和指定的函数
+			Handler:    _EmployeeService_GetEmployeeByNo_Handler,
+		},
+		{
+			MethodName: "Save",
+			Handler:    _EmployeeService_Save_Handler,
+		},
+	},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "GetAll",
+			Handler:       _EmployeeService_GetAll_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "AddAvatar",
+			Handler:       _EmployeeService_AddAvatar_Handler,
+			ClientStreams: true,
+		},
+		{
+			StreamName:    "SaveAll",
+			Handler:       _EmployeeService_SaveAll_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+	},
+	Metadata: "Message.proto",//定义的proto文件名称
+}
+
+//与方法名称对应的处理函数 _EmployeeService_GetEmployeeByNo_Handler
+func _EmployeeService_GetEmployeeByNo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetByRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+        //没有设置拦截器就直接执行对应的方法
+		return srv.(EmployeeServiceServer).GetEmployeeByNo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.EmployeeService/GetEmployeeByNo",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(EmployeeServiceServer).GetEmployeeByNo(ctx, req.(*GetByRequest))
+	}
+    //否则先执行拦截器方法
+	return interceptor(ctx, in, info, handler)//参数：上下文，请求参数，相关方法的信息，对应的处理函数
+}
+
+//UnaryInterceptor定义
+// UnaryServerInterceptor provides a hook to intercept the execution of a unary RPC on the server. info
+// contains all the information of this RPC the interceptor can operate on. And handler is the wrapper
+// of the service method implementation. It is the responsibility of the interceptor to invoke handler
+// to complete the RPC.
+//UnaryServerInterceptor提供了一个hook来拦截服务端unary RPC调的链式过程，
+type UnaryServerInterceptor func(ctx context.Context, req interface{}, info *UnaryServerInfo, handler UnaryHandler) (resp interface{}, err error)
+
 ```
 
 最终调用的是grpc Server的register方法
@@ -282,3 +351,13 @@ func (s *Server) handleStream(t transport.ServerTransport, stream *transport.Str
 }
 ```
 
+#### gRpc Client
+
+##### 1.返回一个ClientConn。
+```go
+clientConn,err:=grpc.Dial("localhost:8000",grpc.WithInsecure())//得到客户端连接
+client:=pb.NewClient(conn)//使用客户端生成的stub文件生成client
+client.GetEmployeeByNo(context.TODO(), &pb.GetByRequest{
+		No: int32(1),
+	})//使用client调用rpc方法
+```
