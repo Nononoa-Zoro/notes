@@ -83,6 +83,7 @@ func RegisterEmployeeServiceServer(s *grpc.Server, srv EmployeeServiceServer) {
 
 ```go
 //判断传入的service是否实现了定义的所有接口
+//第一个参数是服务描述信息
 func (s *Server) RegisterService(sd *ServiceDesc, ss interface{}) {
 	ht := reflect.TypeOf(sd.HandlerType).Elem()
 	st := reflect.TypeOf(ss)
@@ -92,6 +93,7 @@ func (s *Server) RegisterService(sd *ServiceDesc, ss interface{}) {
 	s.register(sd, ss)
 }
 ****************************************
+//服务描述信息的结构体定义
 type ServiceDesc struct {
 	ServiceName string
 	// The pointer to the service interface. Used to check whether the user
@@ -105,6 +107,7 @@ type ServiceDesc struct {
 var _EmployeeService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "pb.EmployeeService",//<package_name>.<rpc_service_name>
 	HandlerType: (*EmployeeServiceServer)(nil),//一个指向Server的指针，用来检查用户注册的这个结构体是否实现了定义的Server的所有接口
+    //Unary方法使用Method字段描述方法
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "GetEmployeeByNo",//方法名称和指定的函数
@@ -115,6 +118,7 @@ var _EmployeeService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _EmployeeService_Save_Handler,
 		},
 	},
+    //流式调用的话使用streams来描述stream方法
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "GetAll",
@@ -204,160 +208,143 @@ func (s *Server) register(sd *ServiceDesc, ss interface{}) {
 
 ##### 3.Serve方法
 
-写过socket编程的同学大都会发现server端通常是有一个for循环监听客户端的请求。
+Serve的大致流程
+
+在Serve方法中存在一个for循环，调用Accept()方法接受链接请求。
 
 ```go
-func (s *Server) Serve(lis net.Listener) error {
-...省略部分代码
-
-	for {
-		rawConn, err := lis.Accept()
-		if err != nil {
-			if ne, ok := err.(interface {
-				Temporary() bool
-			}); ok && ne.Temporary() {
-				if tempDelay == 0 {
-					tempDelay = 5 * time.Millisecond
-				} else {
-					tempDelay *= 2
-				}
-				if max := 1 * time.Second; tempDelay > max {
-					tempDelay = max
-				}
-				s.mu.Lock()
-				s.printf("Accept error: %v; retrying in %v", err, tempDelay)
-				s.mu.Unlock()
-				timer := time.NewTimer(tempDelay)
-				select {
-				case <-timer.C:
-				case <-s.quit.Done():
-					timer.Stop()
-					return nil
-				}
-				continue
-			}
-			s.mu.Lock()
-			s.printf("done serving; Accept = %v", err)
-			s.mu.Unlock()
-
-			if s.quit.HasFired() {
-				return nil
-			}
-			return err
-		}
-		tempDelay = 0
-		// Start a new goroutine to deal with rawConn so we don't stall this Accept
-		// loop goroutine.
-		//
-		// Make sure we account for the goroutine so GracefulStop doesn't nil out
-		// s.conns before this conn can be added.
-		s.serveWG.Add(1)
+for{
+    //创建链接
+    rawConn, err := lis.Accept()
+    ...
+    s.serveWG.Add(1)
 		go func() {
+            //对于每一个链接创建一个协程去处理请求
 			s.handleRawConn(rawConn)
 			s.serveWG.Done()
-		}()
-	}
-}
-
-```
-
-重点看一下这个handleRawConn函数，为了不阻塞Accept，这里是在for循环中开启一个新的routine调用这个函数。下面看看这个函数干了什么，
-
-```go
-//handleRawConn派生一个goroutine来处理刚刚接受的，尚未对其执行任何I / O的连接。
-func (s *Server) handleRawConn(rawConn net.Conn) {
-	if s.quit.HasFired() {
-		rawConn.Close()
-		return
-	}
-    //设置connection的deadline
-	rawConn.SetDeadline(time.Now().Add(s.opts.connectionTimeout))
-    //httphandshake grpc底层还是基于http2.0的
-	conn, authInfo, err := s.useTransportAuthenticator(rawConn)
-	if err != nil {
-		// ErrConnDispatched means that the connection was dispatched away from
-		// gRPC; those connections should be left open.
-		if err != credentials.ErrConnDispatched {
-			s.mu.Lock()
-			s.errorf("ServerHandshake(%q) failed: %v", rawConn.RemoteAddr(), err)
-			s.mu.Unlock()
-			channelz.Warningf(s.channelzID, "grpc: Server.Serve failed to complete security handshake from %q: %v", rawConn.RemoteAddr(), err)
-			rawConn.Close()
-		}
-		rawConn.SetDeadline(time.Time{})
-		return
-	}
-
-	// Finish handshaking (HTTP2)
-	st := s.newHTTP2Transport(conn, authInfo)
-	if st == nil {
-		return
-	}
-
-	rawConn.SetDeadline(time.Time{})
-	if !s.addConn(st) {
-		return
-	}
-	go func() {
-		s.serveStreams(st)
-		s.removeConn(st)
 	}()
 }
 ```
 
-在建立完HTTP2.0的连接之后，又开启了一个routine执行serveStreams函数。
+在handleRawConn（）方法中
 
 ```go
-func (s *Server) serveStreams(st transport.ServerTransport) {
-	defer st.Close()
-	var wg sync.WaitGroup
-	st.HandleStreams(func(stream *transport.Stream) {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
-            //重点看下这个方法
-			s.handleStream(st, stream, s.traceInfo(st, stream))
-		}()
-	}, func(ctx context.Context, method string) context.Context {
-		if !EnableTracing {
-			return ctx
-		}
-		tr := trace.New("grpc.Recv."+methodFamily(method), method)
-		return trace.NewContext(ctx, tr)
-	})
-	wg.Wait()
-}
+//handshake
+conn, authInfo, err := s.useTransportAuthenticator(rawConn)
+//完成握手建立HTTP2链接
+st := s.newHTTP2Transport(conn, authInfo)
+//真正开始处理请求的函数是在协程中调用serveStreams方法
+go func() {
+	s.serveStreams(st)
+	s.removeConn(st)
+}()
+```
+
+在serveStreams方法中，也是开启协程调用了handleStream开始真正处理这个请求
+
+```go
+go func() {
+	defer wg.Done()
+    //真正调用自己实现的server代码处理请求的 入口
+	s.handleStream(st, stream, s.traceInfo(st, stream))
+}()
 ```
 
 ```go
-func (s *Server) handleStream(t transport.ServerTransport, stream *transport.Stream, trInfo *traceInfo) {
-	...
-	//根据servciceName去server中的map中找到对应handler处理
-	srv, knownService := s.m[service]
-	if knownService {
-		if md, ok := srv.md[method]; ok {
-            //sh.HandleRPC(stream.Context(), statsBegin) 调用handler处理rpc请求
-			s.processUnaryRPC(t, stream, srv, md, trInfo)
-			return
-		}
-		if sd, ok := srv.sd[method]; ok {
-			s.processStreamingRPC(t, stream, srv, sd, trInfo)
-			return
-		}
+if knownService {
+    //如果是已经注册的UnaryMethod服务，调用processUnaryRPC进行处理
+	if md, ok := srv.md[method]; ok {
+		s.processUnaryRPC(t, stream, srv, md, trInfo)
+		return
 	}
-
-    ...
-	
+    //如果是已经注册的StreamMethod服务，调用processStreamingRPC进行处理
+	if sd, ok := srv.sd[method]; ok {
+		s.processStreamingRPC(t, stream, srv, sd, trInfo)
+		return
+	}
 }
 ```
+
+这里主要看下processUnaryRPC函数
+
+```go
+//md是传入的MethodDesc包括方法名称和方法，这行代码就是调用定义好的函数，所以我们只是实现了大佬规定好的接口，剩下的就交给rpc框架了。面向接口编程的方式，是模板方法设计模式的一种实现。
+reply, appErr := md.Handler(srv.server, ctx, df, s.opts.unaryInt)
+//将处理的结果写回到输出流
+err := s.sendResponse(t, stream, reply, cp, opts, comp)
+```
+
+至此，简单的Server端Serve方法就分析完了。
+
+
 
 #### gRpc Client
 
-##### 1.返回一个ClientConn。
+##### 1.client端的整体流程
 ```go
+//整体流程
 clientConn,err:=grpc.Dial("localhost:8000",grpc.WithInsecure())//得到客户端连接
 client:=pb.NewClient(conn)//使用客户端生成的stub文件生成client
 client.GetEmployeeByNo(context.TODO(), &pb.GetByRequest{
 		No: int32(1),
-	})//使用client调用rpc方法
+})//使用client调用rpc方法
 ```
+
+
+
+获取客户端连接的Dial方法
+
+```go
+//实际上调用的是DialContext方法
+func Dial(target string, opts ...DialOption) (*ClientConn, error) {
+	return DialContext(context.Background(), target, opts...)
+}
+```
+
+DialContext方法
+
+```go
+//入参：上下文，目标地址，DialOption
+func DialContext(ctx context.Context, target string, opts ...DialOption) (conn *ClientConn, err error) {
+	...
+    //将所有的client端的一元调用变为一个
+    chainUnaryClientInterceptors(cc)
+    //将所有的client端的stream调用合为一个
+	chainStreamClientInterceptors(cc)
+    ...
+    //获取命名解析器
+    resolverBuilder := cc.getResolver(cc.parsedTarget.Scheme)
+    //如果没有配置就使用默认的
+	if resolverBuilder == nil {
+		channelz.Infof(cc.channelzID, "scheme %q not registered, fallback to default scheme", cc.parsedTarget.Scheme)
+		cc.parsedTarget = resolver.Target{
+			Scheme:   resolver.GetDefaultScheme(),//默认的协议名称就是"passthrough"
+			Endpoint: target,
+		}
+		resolverBuilder = cc.getResolver(cc.parsedTarget.Scheme)
+		if resolverBuilder == nil {
+			return nil, fmt.Errorf("could not get resolver for default scheme: %q", cc.parsedTarget.Scheme)
+		}
+	}
+    ...
+    //构建一个resolver
+    rWrapper, err := newCCResolverWrapper(cc, resolverBuilder)
+}
+```
+
+client调用对应的stub中的方法
+
+```go
+func (c *employeeServiceClient) GetEmployeeByNo(ctx context.Context, in *GetByRequest, opts ...grpc.CallOption) (*EmployeeResponse, error) {
+	out := new(EmployeeResponse)
+    //ClientConn的Invoke方法是入口 入参分别是 上下文 方法名 输入 返回 客户端配置参数
+	err := c.cc.Invoke(ctx, "/pb.EmployeeService/GetEmployeeByNo", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+```
+
+
+
