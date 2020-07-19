@@ -40,24 +40,24 @@ public class 二叉树的层次遍历 {
 
     //1 2 3 # # 6 7 # # # # # # # 8
     private static TreeNode getTree(char[] value) {
-        TreeNode p = new TreeNode(value[0]);
-        TreeNode q = p;
+        TreeNode tmp = new TreeNode(value[0]);
+        TreeNode root = tmp;
         Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(tmp);
         int i = 0;
-        queue.add(p);
         while (!queue.isEmpty()) {
-            p = queue.poll();
+            tmp = queue.poll();
             if (2 * i + 1 < value.length) {
-                p.left = new TreeNode(value[2 * i + 1]);
-                queue.add(p.left);
+                tmp.left = new TreeNode(value[2 * i + 1]);
+                queue.add(tmp.left);
             }
             if (2 * i + 2 < value.length) {
-                p.right = new TreeNode(value[2 * i + 2]);
-                queue.add(p.right);
+                tmp.right = new TreeNode(value[2 * i + 2]);
+                queue.add(tmp.right);
             }
             i += 1;
         }
-        return q;
+        return root;
     }
 
     public static void main(String[] args) {
@@ -82,7 +82,7 @@ public class 二叉树的层次遍历 {
                     flag = false;
                 }
             }
-            flag=true;
+            flag = true;
         }
 
         System.out.println(res);

@@ -13,7 +13,7 @@ public class 全排列 {
         int[] arr = {1, 2, 3};
         perm(arr, 0, 2);
         Collections.sort(res);
-        for(String str:res){
+        for (String str : res) {
             System.out.println(str);
         }
     }
@@ -22,8 +22,8 @@ public class 全排列 {
         //base case
         if (start == end) {
             StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < arr.length; i++) {
-              builder.append(arr[i]);
+            for (int i : arr) {
+                builder.append(i);
             }
             res.add(builder.toString());
         }

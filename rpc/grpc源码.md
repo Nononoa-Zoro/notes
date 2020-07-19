@@ -9,9 +9,11 @@ gRpcServer := grpc.NewServer(options...)
 grpc.NewServer返回一个grpc.Server类型的struct，定义如下：
 
 ```go
-// Server is a gRPC server to serve RPC requests.
+package grpc	
+
+// 一个 Server 结构代表对外服务的单元，每个 Server 可以注册多个 Service，每个 Service 可以有多个方法。主程序需要实	例化 Server，然后注册 Service，最后调用 s.Serve() 开始接收请求。
 type Server struct {
-    //// serverOptions 就是描述协议的各种参数选项，包括发送和接收的消息大小、buffer大小等等各种，跟 http Headers 类似
+    // serverOptions 就是描述协议的各种参数选项，包括发送和接收的消息大小、buffer大小等等各种，跟 http Headers 类似
     // serverOptions还可以配置拦截器
 	opts serverOptions
 	

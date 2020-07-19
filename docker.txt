@@ -1,0 +1,31 @@
+查看所有的docker进程
+docker ps
+
+查看docker的所有客户端命令
+docker
+
+docker command --help
+
+启动容器
+docker run -it ubuntu /bin/bash
+-i (interaction) 交互
+-t (terminal) 启动一个终端
+/bin/bash 默认的交互式shell
+
+查看所有的docker容器
+docker ps -a 
+
+启动一个已经停止的容器
+docker start <Container-id>
+
+后台运行
+docker run -itd --name <镜像名> ubuntu /bin/bash
+
+进入到后台运行的docker镜像
+docker exec -it <容器id> /bin/bash
+
+导出容器
+docker export <容器id> > filename
+
+删除容器
+docker rm -f <容器id>

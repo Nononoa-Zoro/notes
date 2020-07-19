@@ -1,8 +1,6 @@
 package com.study.leecode;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 //两个栈可以实现一个队列
 
@@ -61,6 +59,38 @@ public class leecode_103二叉树的锯齿形层次遍历 {
                     if (node.left != null) stack1.push(node.left);
                 }
                 res.add(list);
+            }
+        }
+        return res;
+
+    }
+
+    public static List<List<Integer>> zigzagLevelOrder1(TreeNode root){
+        List<List<Integer>> res = new ArrayList<>();
+        boolean flag = true;
+        Queue<TreeNode> queue = new LinkedList<>();
+        if(root==null)return res;
+        queue.add(root);
+        while (!queue.isEmpty()){
+            int size = queue.size();
+            List<Integer> row = new ArrayList<>();
+            while (size-->0){
+                TreeNode node = queue.poll();
+                row.add(node.val);
+                if(node.left!=null){
+                    queue.add(node.left);
+                }
+                if(node.right!=null){
+                    queue.add(node.right);
+                }
+            }
+            if (flag){
+                res.add(row);
+                flag=!flag;
+            }else{
+                Collections.reverse(row);
+                res.add(row);
+                flag=!flag;
             }
         }
         return res;

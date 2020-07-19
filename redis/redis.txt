@@ -439,7 +439,7 @@ lastsave是一个UNIX时间戳，记录了上一次SAVE或者BGSAVE执行成功�
 
 
 事务
-MULTI EXEC WATCH
+三个命令：MULTI EXEC WATCH
 事务首先以MULTI开始，将多个命令请求打包好，然后一次性按顺序地执行的机制。最终使用EXEC命令提交给服务器执行。
 
 当客户端处于非事务状态的时候，这个客户端发送的命令会立即被服务器执行。
