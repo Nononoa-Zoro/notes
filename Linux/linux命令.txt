@@ -1,2 +1,15 @@
 sed (stream editor)
 利用脚本来处理文件的命令
+
+awk
+
+awk '{print $1,$4}' test //每行按照TAB分割或是空格分割 输出第一项和第四项的值
+
+awk -F, '{print $1,$4}' test //使用,作为分割符，输出第一个和第三个的值
+
+awk -F '[' ,']' '{print $1,$2,$4}' test // 先使用空格再使用,作为分隔符
+
+awk -va=1 '{print $1,$1+a}' log.txt //设置变量 a=1
+
+编写awk脚本执行
+awk -f a.awk test //使用a.awk作为脚本执行

@@ -6,20 +6,26 @@ docker
 
 docker command --help
 
-启动容器
+启动交互式容器
 docker run -it ubuntu /bin/bash
--i (interaction) 交互
--t (terminal)    启动一个终端
+-i (interaction) 交互 保证容器内部的STDIN是开启的 这样就可以读取标准输入
+-t (terminal)    启动一个终端，在容器内部开启一个伪tty终端
 -d (detach)      后台启动容器
 /bin/bash 默认的交互式shell
 
-查看所有的docker容器
+查看正在运行的容器
+docker ps 
+
+查看所有的docker容器（包括已经退出的容器）
 docker ps -a 
 
 启动一个已经停止的容器
 docker start <Container-id>
 
-后台运行
+唯一确定一个容器
+UUID 或者 容器的名称
+
+创建守护式容器并运行
 docker run -itd --name <镜像名> ubuntu /bin/bash
 
 进入到后台运行的docker镜像
@@ -61,12 +67,42 @@ docker port <容器名字> <容器内部端口> //查看容器内部端口和外
 创建自定义名字的容器
 docker run -d -P --name <容器名称> <使用的镜像respository:TAG唯一确定> <进入docker容器需要执行的Command>
 
+查看docker容器内部的日志
+docker logs <容器name/容器uuid>
 
 docker容器可以通过自定义的网络进行互联
 创建网络
 docker network create -d bridge <自定义的网络名>
 查看你有哪些网络
 docker network ls 
+
+查看容器中的进程
+docker top <容器名称/容器uuid>
+
+在容器内部运行进程
+docker exec  -t -i daemon_dave /bin/bash  // 在名称为daemon_dave的容器中运行/bin/bash
+
+停止一个正在运行的容器
+docker stop <容器名字/容器uuid>
+
+
+构建自己的镜像
+docker commit <容器uuid> zorozh/apache
+
+FROM ubuntu:14.04 // Dockerfile 以FROM开头表示该镜像使用的基础镜像
+MAINTAINER zoro "742582470@qq.com" // 表示创作者
+RUN apt-get update && apt-get install -y nginx // 在容器中执行命令，每条RUN命令都会新建一个镜像层
+RUN echo 'Hi I'm in your Container' > /usr/share/nginx/html/index.html
+EXPOSE 80 // 指定Docker中的容器使用指定的端口
+
+基于已有的Dockerfile构建镜像
+docker build -t="zoro/static_web" . //最后一个参数表示docker的上下文就是当前目录，在执行docker build的时候会把上下文的所有文件拷贝到docker引擎中去
+
+查看容器内部端口的映射情况
+docker port <容器名字/容器uuid> <端口号>
+
+docker run -d -P --name <容器名> <镜像名> <命令> // -P会将Dockerfile中的EXPOSE端口暴露给宿主机
+
 
 
 

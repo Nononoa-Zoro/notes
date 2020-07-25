@@ -9,3 +9,12 @@ db.Model(&user).Update("name","hello")
 
 
 
+#### 查询
+
+**find 查询所有**
+
+```go
+var res []model.System
+err = db.Model(&model.System{}).Find(&res).Error
+```
+
