@@ -25,7 +25,6 @@ public class 二叉树遍历 {
 
     //非递归先序遍历
     public static void preOrderUnRecur(Node head) {
-
         if (head != null) {
             Stack<Node> stack = new Stack<>();
             stack.push(head);
@@ -53,23 +52,34 @@ public class 二叉树遍历 {
 
     //中序遍历非递归
     //当前节点为空 从栈中拿出一个节点打印 并将右孩子节点压栈
-    public static void inOrderUnRecur(Node head) {
-
-        if (head != null) {
+    public static void inOrderUnRecur(Node root) {
+//        if (head != null) {
+//            Stack<Node> stack = new Stack<>();
+//            while (!stack.isEmpty() || head != null) {
+//                if (head != null) {
+//                    stack.push(head);
+//                    head = head.left;
+//                } else {
+//                    head = stack.pop();
+//                    System.out.println(head.value);
+//                    head = head.right;
+//                }
+//            }
+//        }
+        if(root!=null){
             Stack<Node> stack = new Stack<>();
-            while (!stack.isEmpty() || head != null) {
-                if (head != null) {
-                    stack.push(head);
-                    head = head.left;
-                } else {
-                    head = stack.pop();
-                    System.out.println(head.value);
-                    head = head.right;
+            stack.push(root);
+            while (!stack.isEmpty()||root!=null){
+                if(root!=null){
+                    stack.push(root);
+                    root=root.left;
+                }else{
+                    root = stack.pop();
+                    System.out.println(root.value);
+                    root=root.right;
                 }
             }
         }
-
-
     }
 
     //递归后序遍历
@@ -97,7 +107,6 @@ public class 二叉树遍历 {
                 System.out.println(s2.pop().value + " ");
             }
         }
-
     }
 
 }

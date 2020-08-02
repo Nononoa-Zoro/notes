@@ -106,6 +106,9 @@ git branch --set-upstream-to=origin/dev (将本地分支关联到远程dev分支
 git checkout dev
 git remote remove origin 
 
+修改本地分支名称
+git branch -m oldname newname
+
 
 
 

@@ -13,6 +13,7 @@ public class leecode_20有效的括号 {
         put('?', '?');
     }};
 
+    // 栈里边儿的元素只会存放左括号
     public static boolean isValid(String s) {
 
         if (s.length() > 0 && !map.containsKey(s.charAt(0))) return false;
@@ -20,8 +21,10 @@ public class leecode_20有效的括号 {
         Stack<Character> stack = new Stack<>();
         for (Character c : s.toCharArray()) {
             if (map.containsKey(c)) {
+                // 如果是左括号就压栈
                 stack.push(c);
             } else {
+                // 如果是右括号，判断栈顶元素是不是对应的左括号
                 Character top = map.get(stack.peek());
                 if (top == c) {
                     stack.pop();
